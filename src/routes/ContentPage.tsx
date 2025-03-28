@@ -9,11 +9,12 @@ interface ContentPageProps {
 function ContentPage({ path, title }: ContentPageProps) {
   // Update document title when page changes
   useEffect(() => {
-    document.title = `${title} | Markdown-Driven Site`
+    document.title = `${title} | Natural Buddhism`
   }, [title])
 
   return (
     <div>
+      <h1 className="text-3xl font-bold mb-6">{title}</h1>
       <MarkdownRenderer path={path} />
     </div>
   )

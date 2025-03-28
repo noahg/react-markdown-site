@@ -1,29 +1,42 @@
 import { NavLink } from 'react-router-dom'
 import { NavigationItem } from '../App'
-import './Navigation.css'
 
 interface NavigationProps {
   items: NavigationItem[];
+  mobile: boolean;
 }
 
-function Navigation({ items }: NavigationProps) {
-  return (
-    <nav className="navigation">
-      <ul className="avList">
+function Navigation({ items, mobile }: NavigationProps) {
+  if (mobile) {
+    return (
+      <>
         {items.map((item) => (
-          <li key={item.path} className="navItem">
+          <li key={item.path}>
             <NavLink 
               to={item.path}
-              className={({ isActive }) => 
-                isActive ? `${"navLink"} ${"active"}` : "navLink"
-              }
+              className={({ isActive }) => isActive ? "active" : ""}
             >
               {item.title}
             </NavLink>
           </li>
         ))}
-      </ul>
-    </nav>
+      </>
+    )
+  }
+
+  return (
+    <>
+      {items.map((item) => (
+        <li key={item.path}>
+          <NavLink 
+            to={item.path}
+            className={({ isActive }) => isActive ? "active" : ""}
+          >
+            {item.title}
+          </NavLink>
+        </li>
+      ))}
+    </>
   )
 }
 

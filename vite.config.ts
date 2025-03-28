@@ -9,8 +9,6 @@ export default defineConfig({
     open: true
   },
   css: {
-    modules: {
-      localsConvention: 'camelCase'
-    }
+    postcss: './postcss.config.js',
   }
 })
