@@ -28,7 +28,7 @@ function MarkdownRenderer({ path }: MarkdownRendererProps) {
   }
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100">
       <div className="card-body">
         <div className="markdown-content">
           <ReactMarkdown>{content}</ReactMarkdown>
