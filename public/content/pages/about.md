@@ -1,6 +1,6 @@
 # About This Project
 
-This site was built with a focus on first principles and transparency, using:
+This site was built with a focus on text and easy publishing.
 
 - React for UI components
 - TypeScript for type safety

@@ -9,7 +9,7 @@ interface ContentPageProps {
 function ContentPage({ path, title }: ContentPageProps) {
   // Update document title when page changes
   useEffect(() => {
-    document.title = `${title} | Natural Buddhism`
+    document.title = `${title} | React Markdown Site`
   }, [title])
 
   return (

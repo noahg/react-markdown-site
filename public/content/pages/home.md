@@ -4,10 +4,12 @@ This is a simple, transparent React site that uses markdown files for content.
 
 ## Features
 
-- **Markdown Content** - All pages are written in markdown
-- **React Components** - For interactive elements
-- **TypeScript** - For type safety
 - **Simple Architecture** - Easy to understand and extend
+- **Markdown Content** - All pages are written in markdown
+- **React Components** - For interactive element
+- **TypeScript** - For type safety
+- **Tailwind CSS / Daisy UI** - For quick styling
+
 
 ## Getting Started
 

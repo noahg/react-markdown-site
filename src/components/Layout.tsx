@@ -1,4 +1,3 @@
-// src/components/Layout.tsx
 import { ReactNode, useState, useEffect } from 'react'
 import Navigation from './Navigation'
 import { NavigationItem } from '../App'
@@ -14,9 +13,7 @@ function Layout({ children, navigation }: LayoutProps) {
   const [theme, setTheme] = useState<ThemeType>('light')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // Check for system preference on initial load
   useEffect(() => {
-    // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme') as ThemeType;
     if (savedTheme && ['light', 'dark', 'caramellatte'].includes(savedTheme)) {
       setTheme(savedTheme);
@@ -31,7 +28,6 @@ function Layout({ children, navigation }: LayoutProps) {
     localStorage.setItem('theme', theme);
   }, [theme])
 
-  // Get theme icon based on current theme
   const getThemeIcon = () => {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,7 +51,7 @@ function Layout({ children, navigation }: LayoutProps) {
           </button>
         </div>
         <div className="navbar-center">
-          <span className="text-xl font-bold normal-case">Natural Buddhism</span>
+          <span className="text-xl font-bold normal-case">My Markdown React Site</span>
         </div>
         <div className="navbar-end">
           <div className="dropdown dropdown-end">
@@ -71,19 +67,29 @@ function Layout({ children, navigation }: LayoutProps) {
         </div>
       </div>
 
-      {/* Main content with sidebar */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - always below navbar */}
-        <div className={`
-           w-64 shrink-0 transition-all duration-300 ease-in-out overflow-y-auto
-          lg:block ${sidebarOpen ? 'block' : 'hidden'} z-10
+ {/* Content area with sidebar and main content */}
+ <div className="flex flex-1 relative">
+        {/* Sidebar - overlay on mobile, fixed on desktop */}
+        <aside className={`
+          bg-base-200 w-64 transition-all duration-300 ease-in-out overflow-y-auto
+          shadow-lg z-20
+          lg:relative lg:translate-x-0 lg:min-h-full lg:h-auto
+          fixed left-0 top-0 h-full pt-16
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
-          <div className="p-4">
-            <ul className="menu p-2 rounded-box">
+          <div className="p-4 h-full">
+            <ul className="menu p-4 rounded-box">
               <Navigation items={navigation} mobile={false} />
             </ul>
           </div>
-        </div>
+        </aside>
+        
+        {/* Overlay backdrop when sidebar is open on mobile */}
+        <div 
+          className={`fixed inset-0 bg-gary bg-opacity-50 z-10 lg:hidden transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+
 
         {/* Main content area */}
         <main className="flex-1 p-6 overflow-y-auto">
@@ -94,7 +100,7 @@ function Layout({ children, navigation }: LayoutProps) {
       {/* Footer */}
       <footer className="footer footer-center p-4 bg-base-200 text-base-content">
         <div>
-          <p>© {new Date().getFullYear()} - Noah Glusenkamp</p>
+          <p>© {new Date().getFullYear()} - Nobody</p>
         </div>
       </footer>
     </div>
