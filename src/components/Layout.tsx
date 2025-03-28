@@ -12,6 +12,7 @@ type ThemeType = 'light' | 'dark' | 'caramellatte';
 
 function Layout({ children, navigation }: LayoutProps) {
   const [theme, setTheme] = useState<ThemeType>('light')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // Check for system preference on initial load
   useEffect(() => {
@@ -30,14 +31,6 @@ function Layout({ children, navigation }: LayoutProps) {
     localStorage.setItem('theme', theme);
   }, [theme])
 
-  // Cycle through themes: light -> dark -> cupcake -> light
-  const cycleTheme = () => {
-    const themeOrder: ThemeType[] = ['light', 'dark', 'caramellatte'];
-    const currentIndex = themeOrder.indexOf(theme);
-    const nextIndex = (currentIndex + 1) % themeOrder.length;
-    setTheme(themeOrder[nextIndex]);
-  }
-
   // Get theme icon based on current theme
   const getThemeIcon = () => {
     return (
@@ -49,25 +42,20 @@ function Layout({ children, navigation }: LayoutProps) {
 
   return (
     <div className="flex flex-col min-h-screen bg-base-100">
-      {/* Navbar */}
-      <div className="navbar bg-base-200 shadow-md">
+      {/* Top navbar - always full width */}
+      <div className="navbar bg-base-200">
         <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <Navigation items={navigation} mobile={true} />
-            </ul>
-          </div>
-          <a className="text-xl font-bold normal-case">Natural Buddhism</a>
+          <button 
+            className="btn btn-ghost lg:hidden"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </button>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <Navigation items={navigation} mobile={false} />
-          </ul>
+        <div className="navbar-center">
+          <span className="text-xl font-bold normal-case">Natural Buddhism</span>
         </div>
         <div className="navbar-end">
           <div className="dropdown dropdown-end">
@@ -77,21 +65,36 @@ function Layout({ children, navigation }: LayoutProps) {
             <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
               <li><a onClick={() => setTheme('light')} className={theme === 'light' ? 'active' : ''}>Light</a></li>
               <li><a onClick={() => setTheme('dark')} className={theme === 'dark' ? 'active' : ''}>Dark</a></li>
-              <li><a onClick={() => setTheme('caramellatte')} className={theme === 'caramellatte' ? 'active' : ''}>Sepia</a></li>
+              <li><a onClick={() => setTheme('caramellatte')} className={theme === 'caramellatte' ? 'active' : ''}>Paper</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Main content */}
-      <main className="container mx-auto px-4 py-8 flex-grow">
-        {children}
-      </main>
+      {/* Main content with sidebar */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar - always below navbar */}
+        <div className={`
+           w-64 shrink-0 transition-all duration-300 ease-in-out overflow-y-auto
+          lg:block ${sidebarOpen ? 'block' : 'hidden'} z-10
+        `}>
+          <div className="p-4">
+            <ul className="menu p-2 rounded-box">
+              <Navigation items={navigation} mobile={false} />
+            </ul>
+          </div>
+        </div>
+
+        {/* Main content area */}
+        <main className="flex-1 p-6 overflow-y-auto">
+          {children}
+        </main>
+      </div>
 
       {/* Footer */}
       <footer className="footer footer-center p-4 bg-base-200 text-base-content">
         <div>
-          <p>© {new Date().getFullYear()} - Built with React, Markdown & Daisy UI</p>
+          <p>© {new Date().getFullYear()} - Noah Glusenkamp</p>
         </div>
       </footer>
     </div>
