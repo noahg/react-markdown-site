@@ -1,0 +1,35 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.header {
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.footer {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid #eaeaea;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .header, .footer {
+    border-color: #333;
+  }
+  
+  .footer {
+    color: #999;
+  }
+}
