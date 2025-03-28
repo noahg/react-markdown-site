@@ -1,9 +1,9 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
+@plugin "daisyui";
 
 /* Custom styles for markdown content */
 .markdown-content {
-  @apply prose prose-sm sm:prose lg:prose-lg max-w-none;
+  @reference prose prose-sm sm:prose lg:prose-lg max-w-none;
 }
 
 .markdown-content h1 {
